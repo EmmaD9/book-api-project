@@ -3,7 +3,7 @@
 const htmlResponses = require('./loadFiles.js');
 
 const handleGET = (pathname, request, response) => {
-    if (pathname === '/getUsers') return getUsersGET(request, response);
+    if (pathname === '/getBooks') return getBooksGET(request, response);
     if (pathname === '/notReal') return notRealGET(request, response);
     if (pathname === '/') return htmlResponses.getIndex(request, response);
     if (pathname === '/style.css') return htmlResponses.getCss(request, response);
@@ -12,7 +12,7 @@ const handleGET = (pathname, request, response) => {
 };
 
 const handleHEAD = (pathname, request, response) => {
-    if (pathname === '/getUsers') return getUsersHEAD(request, response);
+    if (pathname === '/getBooks') return getBooksHEAD(request, response);
     if (pathname === '/notReal') return notRealHEAD(request, response);
 
     return notFoundHEAD(request, response);
@@ -28,10 +28,10 @@ const handlePOST = (pathname, request, response) => {
 const users = {};
 
 //GET users JSON
-const getUsersGET = (request, response) => {
+const getBooksGET = (request, response) => {
     const responseJSON = { users };
 
-    console.log("getUsersGET called");
+    console.log("getBooksGET called");
     console.log(JSON.stringify(responseJSON));
 
     response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -40,7 +40,7 @@ const getUsersGET = (request, response) => {
 };
 
 //GET users JSON but with no body
-const getUsersHEAD = (request, response) => {
+const getBooksHEAD = (request, response) => {
     response.writeHead(200, { 'Content-Type': 'application/json' });
     response.end();
 };
@@ -63,6 +63,7 @@ const notRealHEAD = (request, response) => {
     response.end();
 }
 
+//TODO:
 const addUserPOST = (request, response) => {
     let body = '';
 

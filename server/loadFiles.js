@@ -39,5 +39,6 @@ const getClientJS = (req, res) => {
 module.exports = {
     getIndex,
     getCss,
+    getClientJS,
     books
 }
