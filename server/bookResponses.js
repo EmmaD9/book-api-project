@@ -63,7 +63,7 @@ const notRealHEAD = (request, response) => {
     response.end();
 }
 
-//TODO:
+//TODO: edit this to be adding books
 const addUserPOST = (request, response) => {
     let body = '';
 
@@ -127,8 +127,8 @@ module.exports = {
     handleGET,
     handleHEAD,
     handlePOST,
-    getUsersGET,
-    getUsersHEAD,
+    getBooksGET,
+    getBooksHEAD,
     notRealGET,
     notRealHEAD,
     addUserPOST,
