@@ -1,0 +1,12 @@
+Dataset being used: the books.json from the provided datasets
+Work Completed:
+    Milestone 1:
+
+What work is left and the plan to complete it:
+    dfd
+
+Above and Beyond Plan:
+    Good ui styling, ability to search/add books from another api?
+
+Borrowed code fragments:
+    I used a lot of the HTTP API 2 homework as a reference, specifically ./responses, and server.js, and I marked in my code where I used them and what they were used for. Essentially I used it as a base to get my api server started

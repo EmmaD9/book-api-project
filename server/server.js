@@ -2,7 +2,7 @@
 
 const http = require('http');
 //const htmlResponses = require('./htmlResponses.js');
-//const dataResponses = require('./responses.js');
+const dataResponses = require('./bookResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -26,6 +26,9 @@ const onRequest = (request, response) => {
         dataResponses.handleHEAD(pathname, request, response);
     } else if (request.method === 'POST') {
         dataResponses.handlePOST(pathname, request, response);
+    } else if (url === '/client.js'){
+        return loadFiles.getClientJS(request, response);
+
     } else {
         dataResponses.notFoundGET(request, response);
     }
