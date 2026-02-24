@@ -1,7 +1,6 @@
 //used base from office hours convo and http api assignment 2
 
 const http = require('http');
-//const htmlResponses = require('./htmlResponses.js');
 const dataResponses = require('./bookResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
