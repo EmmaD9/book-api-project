@@ -10,9 +10,9 @@ const handleGET = (pathname, request, response) => {
 
     //TODO update these endpoints/methods
     //TODO add query paramater support to one of these
-    if (pathname === '/getBooksByTitle') return getBooksGET(request, response);
-    if (pathname === '/getBooksByAuthor') return getBooksGET(request, response);
-    if (pathname === '/getBooksByYear') return getBooksGET(request, response);
+    if (pathname === '/getBooksByTitle') return getTitleGET(request, response);
+    if (pathname === '/getBooksByAuthor') return getAuthorGET(request, response);
+    if (pathname === '/getBooksByYear') return getYearGET(request, response);
 
     if (pathname === '/notReal') return notRealGET(request, response);
     if (pathname === '/') return htmlResponses.getIndex(request, response);
@@ -44,10 +44,151 @@ const getBooksGET = (request, response) => {
     console.log("getBooksGET called");
     console.log(JSON.stringify(responseJSON));
 
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(responseJSON) });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.write(JSON.stringify(responseJSON));
     response.end();
 };
+
+const getTitleGET = (request, response) => {
+    const { title } = request.query;
+
+    //check if param is missing
+    if (!title) {
+        const responseJSON = {
+            message: 'Title is required for search',
+            id: 'missingParams',
+        };
+        
+        const data = JSON.stringify(responseJSON);
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    //find book via title
+    const book = books[title];
+
+    if (!book) {
+        const responseJSON = {
+            message: `No book found with title: '${title}'.`,
+            id: 'notFound',
+        };
+        const data = JSON.stringify(responseJSON);
+
+        response.writeHead(404, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    const data = JSON.stringify({ book });
+
+    response.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+    response.write(data);
+    response.end();
+
+}
+
+const getAuthorGET = (request, response) => {
+    const { author } = request.query;
+
+    //check if param is missing
+    if (!author) {
+        const responseJSON = {
+            message: 'An author is required for search',
+            id: 'missingParams',
+        };
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    //find book via title
+    const book = books[author];
+
+    if (!book) {
+        const responseJSON = {
+            message: `No book found with author: '${author}'.`,
+            id: 'notFound',
+        };
+        const data = JSON.stringify(responseJSON);
+
+        response.writeHead(404, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    const data = JSON.stringify({ book });
+
+    response.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+    response.write(data);
+    response.end();
+}
+
+const getYearGET = (request, response) => {
+    const { year } = request.query;
+
+    //check if param is missing
+    if (!year) {
+        const responseJSON = {
+            message: 'A year is required for search',
+            id: 'missingParams',
+        };
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    //find book via title
+    const book = books[year];
+
+    if (!book) {
+        const responseJSON = {
+            message: `No book found with the year: '${year}'.`,
+            id: 'notFound',
+        };
+        const data = JSON.stringify(responseJSON);
+
+        response.writeHead(404, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        response.write(data);
+        return response.end();
+    }
+
+    const data = JSON.stringify({ book });
+
+    response.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+    response.write(data);
+    response.end();
+}
 
 //GET books JSON but with no body
 const getBooksHEAD = (request, response) => {
