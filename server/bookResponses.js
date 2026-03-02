@@ -123,7 +123,7 @@ const getAuthorGET = (request, response) => {
 
     //find book via title
     const book = books.find(
-        (b) => b.author.toLowerCase() === title.toLowerCase()
+        (b) => b.author.toLowerCase() === author.toLowerCase()
     );
 
 
@@ -170,11 +170,13 @@ const getYearGET = (request, response) => {
         });
         response.write(data);
         return response.end();
-        return response.end();
     }
 
-    //find book via title
-    const book = books[year];
+    //find book via year
+    const book = books.find(
+        (b) => b.year === year
+    );
+
 
     if (!book) {
         const responseJSON = {
