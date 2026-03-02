@@ -63,7 +63,6 @@ const notRealHEAD = (request, response) => {
     response.end();
 }
 
-//TODO: edit this to be adding books
 const addBookPOST = (request, response) => {
     let body = '';
 
@@ -102,7 +101,17 @@ const addBookPOST = (request, response) => {
             return response.end();
         }
 
-        //users[name] = { age };
+        // create new book
+        books[title] = {
+            author,
+            country,
+            language,
+            link,
+            pages,
+            title,
+            year,
+            genres,
+        };
 
         const responseJSON = { message: 'Created Successfully' };
 
