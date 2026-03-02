@@ -6,7 +6,6 @@ const loadFiles = require('./loadFiles.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-
 const onRequest = (request, response) => {
     const protocol = request.connection.encrypted ? 'https' : 'http';
     const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
@@ -16,6 +15,8 @@ const onRequest = (request, response) => {
     if (request.headers.accept) {
         request.acceptedTypes = request.headers.accept.split(',');
     }
+
+    console.log(JSON.stringify(request.query));
 
     const { pathname } = parsedUrl;
 
