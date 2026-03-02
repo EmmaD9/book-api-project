@@ -6,14 +6,15 @@ const htmlResponses = require('./loadFiles.js');
 const { books } = require('./loadFiles.js');
 
 const handleGET = (pathname, request, response) => {
-    if (pathname === '/getBooks') return getBooksGET(request, response);
 
-    //TODO update these endpoints/methods
-    //TODO add query paramater support to one of these
+    //GET endpoints:
+    if (pathname === '/getBooks') return getBooksGET(request, response);
+    //these take queries
     if (pathname === '/getBooksByTitle') return getTitleGET(request, response);
     if (pathname === '/getBooksByAuthor') return getAuthorGET(request, response);
     if (pathname === '/getBooksByYear') return getYearGET(request, response);
 
+    //My static files:
     if (pathname === '/notReal') return notRealGET(request, response);
     if (pathname === '/') return htmlResponses.getIndex(request, response);
     if (pathname === '/style.css') return htmlResponses.getCss(request, response);
@@ -32,7 +33,7 @@ const handleHEAD = (pathname, request, response) => {
 const handlePOST = (pathname, request, response) => {
     if (pathname === '/addBook') return addBookPOST(request, response);
     //TODO update the endpoints/methods
-    if (pathname === '/editBook') return addBookPOST(request, response);
+    if (pathname === '/editBook') return editBookPOST(request, response);
 
     return notFoundGET(request, response);
 };
@@ -243,22 +244,6 @@ const addBookPOST = (request, response) => {
             return response.end();
         }
 
-        const bookExists = books[title];
-
-        if (bookExists) {
-            books[title].author = author;
-            books[title].country = country;
-            books[title].language = language;
-            books[title].link = link;
-            books[title].pages = pages;
-            books[title].title = title;
-            books[title].year = year;
-            books[title].genres = genres;
-
-            response.writeHead(204, { 'Content-Type': 'application/json' });
-            return response.end();
-        }
-
         // create new book
         books[title] = {
             author,
@@ -276,6 +261,66 @@ const addBookPOST = (request, response) => {
         response.writeHead(201, { 'Content-Type': 'application/json' });
         response.write(JSON.stringify(responseJSON));
         return response.end();
+    });
+};
+
+
+//edit books based on the title
+const editBookPOST = (request, response) => {
+    let body = '';
+
+    request.on('data', (chunk) => {
+        body += chunk;
+    });
+
+    request.on('end', () => {
+
+        //supports either content type
+        if (request.headers['content-type'] === 'application/json') {
+            parsed = JSON.parse(body);
+        } else if (request.headers['content-type'] === 'application/x-www-form-urlencoded') {
+            parsed = Object.fromEntries(new URLSearchParams(body));
+        }
+
+        const { author, country, language, link, pages, title, year, genres } = parsed;
+
+        if (!author || !country || !language || !link || !pages || !title || !year || !genres) {
+            const responseJSON = {
+                message: 'Author, country, language, link, pages, title, year, genres are all required.',
+                id: 'missingParams',
+            };
+
+            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify(responseJSON));
+            return response.end();
+        }
+
+        //updates the book if it can find the title!
+        const bookExists = books[title];
+
+        if (bookExists) {
+            books[title].author = author;
+            books[title].country = country;
+            books[title].language = language;
+            books[title].link = link;
+            books[title].pages = pages;
+            books[title].title = title;
+            books[title].year = year;
+            books[title].genres = genres;
+
+            response.writeHead(204, { 'Content-Type': 'application/json' });
+            return response.end();
+        } else {
+            const responseJSON = {
+                message: `A book of title '${title}' does not exist`,
+                id: 'doesNotExist',
+            };
+
+            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify(responseJSON));
+            return response.end();
+        }
+
     });
 };
 
