@@ -71,7 +71,9 @@ const getTitleGET = (request, response) => {
     }
 
     //find book via title
-    const book = books[title];
+    const book = books.find(
+        (b) => b.title.toLowerCase() === title.toLowerCase()
+    );
 
     if (!book) {
         const responseJSON = {
@@ -109,16 +111,21 @@ const getAuthorGET = (request, response) => {
             id: 'missingParams',
         };
 
+        const data = JSON.stringify(responseJSON);
+
         response.writeHead(400, {
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)),
+            'Content-Length': Buffer.byteLength(data),
         });
         response.write(data);
         return response.end();
     }
 
     //find book via title
-    const book = books[author];
+    const book = books.find(
+        (b) => b.author.toLowerCase() === title.toLowerCase()
+    );
+
 
     if (!book) {
         const responseJSON = {
@@ -155,11 +162,14 @@ const getYearGET = (request, response) => {
             id: 'missingParams',
         };
 
+        const data = JSON.stringify(responseJSON);
+
         response.writeHead(400, {
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)),
+            'Content-Length': Buffer.byteLength(data),
         });
         response.write(data);
+        return response.end();
         return response.end();
     }
 
