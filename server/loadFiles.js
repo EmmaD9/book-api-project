@@ -4,7 +4,7 @@ const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
 const clientJS = fs.readFileSync(`${__dirname}/../client/client.js`);
 
-//load in the JSON data:
+//loads in the JSON data:
 const rawBooks = fs.readFileSync(`${__dirname}/../src/books.json`);
 const books = JSON.parse(rawBooks);
 

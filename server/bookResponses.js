@@ -19,17 +19,17 @@ const handleHEAD = (pathname, request, response) => {
 };
 
 const handlePOST = (pathname, request, response) => {
-    if (pathname === '/addUser') return addUserPOST(request, response);
+    if (pathname === '/addBook') return addBookPOST(request, response);
 
     return notFoundGET(request, response);
 };
 
-//user storage:
-const users = {};
+//book storage:
+const books = {};
 
-//GET users JSON
+//GET books JSON
 const getBooksGET = (request, response) => {
-    const responseJSON = { users };
+    const responseJSON = { books };
 
     console.log("getBooksGET called");
     console.log(JSON.stringify(responseJSON));
@@ -39,7 +39,7 @@ const getBooksGET = (request, response) => {
     response.end();
 };
 
-//GET users JSON but with no body
+//GET books JSON but with no body
 const getBooksHEAD = (request, response) => {
     response.writeHead(200, { 'Content-Type': 'application/json' });
     response.end();
@@ -64,7 +64,7 @@ const notRealHEAD = (request, response) => {
 }
 
 //TODO: edit this to be adding books
-const addUserPOST = (request, response) => {
+const addBookPOST = (request, response) => {
     let body = '';
 
     request.on('data', (chunk) => {
@@ -73,11 +73,11 @@ const addUserPOST = (request, response) => {
 
     request.on('end', () => {
         const parsed = JSON.parse(body);
-        const { name, age } = parsed;
+        const { author, country, language, link, pages, title, year, genres } = parsed;
 
-        if (!name || !age) {
+        if (!author || !country || !language || !link || !pages || !title || !year || !genres) {
             const responseJSON = {
-                message: 'Name and age are both required.',
+                message: 'Author, country, language, link, pages, title, year, genres are all required.',
                 id: 'missingParams',
             };
 
@@ -86,16 +86,23 @@ const addUserPOST = (request, response) => {
             return response.end();
         }
 
-        const userExists = users[name];
+        const bookExists = books[title];
 
-        if (userExists) {
-            users[name].age = age;
+        if (bookExists) {
+            books[title].author = author;
+            books[title].country = country;
+            books[title].language = language;
+            books[title].link = link;
+            books[title].pages = pages;
+            books[title].title = title;
+            books[title].year = year;
+            books[title].genres = genres;
 
             response.writeHead(204, { 'Content-Type': 'application/json' });
             return response.end();
         }
 
-        users[name] = { age };
+        //users[name] = { age };
 
         const responseJSON = { message: 'Created Successfully' };
 
@@ -131,7 +138,7 @@ module.exports = {
     getBooksHEAD,
     notRealGET,
     notRealHEAD,
-    addUserPOST,
+    addBookPOST,
     notFoundGET,
     notFoundHEAD
 }
