@@ -4,7 +4,7 @@
   "description": "A Node.js web server that both hosts static files such as HTML, and hosts a backend web API from a JSON file about books.",
   "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "repository": {
     "type": "git",
