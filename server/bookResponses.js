@@ -193,7 +193,7 @@ const getYearGET = (request, response) => {
 
 //GET books JSON but with no body
 const getBooksHEAD = (request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(response)) });
     response.end();
 };
 
@@ -204,14 +204,14 @@ const notRealGET = (request, response) => {
         id: 'notFound',
     };
 
-    response.writeHead(404, { 'Content-Type': 'application/json' });
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.write(JSON.stringify(responseJSON));
     response.end();
 };
 
 //head not real
 const notRealHEAD = (request, response) => {
-    response.writeHead(404, { 'Content-Type': 'application/json' });
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.end();
 }
 
@@ -223,10 +223,26 @@ const addBookPOST = (request, response) => {
     });
 
     request.on('end', () => {
-
+        let parsed;
         //supports either content type
         if (request.headers['content-type'] === 'application/json') {
-            parsed = JSON.parse(body);
+            try {
+                parsed = JSON.parse(body);
+            } catch (err) {
+                const responseJSON = {
+                    message: 'Request body contains invalid JSON.',
+                    id: 'badJSON',
+                };
+                const data = JSON.stringify(responseJSON);
+
+                response.writeHead(400, {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(data),
+                });
+                response.write(data);
+                return response.end();
+            }
+
         } else if (request.headers['content-type'] === 'application/x-www-form-urlencoded') {
             parsed = Object.fromEntries(new URLSearchParams(body));
         }
@@ -239,7 +255,7 @@ const addBookPOST = (request, response) => {
                 id: 'missingParams',
             };
 
-            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.writeHead(400, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
             response.write(JSON.stringify(responseJSON));
             return response.end();
         }
@@ -258,7 +274,7 @@ const addBookPOST = (request, response) => {
 
         const responseJSON = { message: 'Created Successfully' };
 
-        response.writeHead(201, { 'Content-Type': 'application/json' });
+        response.writeHead(201, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
         response.write(JSON.stringify(responseJSON));
         return response.end();
     });
@@ -274,10 +290,27 @@ const editBookPOST = (request, response) => {
     });
 
     request.on('end', () => {
-
+        let parsed;
         //supports either content type
         if (request.headers['content-type'] === 'application/json') {
-            parsed = JSON.parse(body);
+            
+            try {
+                parsed = JSON.parse(body);
+            } catch (err) {
+                const responseJSON = {
+                    message: 'Request body contains invalid JSON.',
+                    id: 'badJSON',
+                };
+                const data = JSON.stringify(responseJSON);
+
+                response.writeHead(400, {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(data),
+                });
+                response.write(data);
+                return response.end();
+            }
+
         } else if (request.headers['content-type'] === 'application/x-www-form-urlencoded') {
             parsed = Object.fromEntries(new URLSearchParams(body));
         }
@@ -290,7 +323,7 @@ const editBookPOST = (request, response) => {
                 id: 'missingParams',
             };
 
-            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.writeHead(400, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
             response.write(JSON.stringify(responseJSON));
             return response.end();
         }
@@ -308,7 +341,7 @@ const editBookPOST = (request, response) => {
             books[title].year = year;
             books[title].genres = genres;
 
-            response.writeHead(204, { 'Content-Type': 'application/json' });
+            response.writeHead(204, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
             return response.end();
         } else {
             const responseJSON = {
@@ -316,7 +349,7 @@ const editBookPOST = (request, response) => {
                 id: 'doesNotExist',
             };
 
-            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.writeHead(400, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
             response.write(JSON.stringify(responseJSON));
             return response.end();
         }
@@ -331,14 +364,14 @@ const notFoundGET = (request, response) => {
         id: 'notFound',
     }
 
-    response.writeHead(404, { 'Content-Type': 'application/json' });
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.write(JSON.stringify(responseJSON));
     response.end();
 }
 
 //HEAD 404 version with no body
 const notFoundHEAD = (request, response) => {
-    response.writeHead(404, { 'Content-Type': 'application/json' });
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.end();
 };
 
