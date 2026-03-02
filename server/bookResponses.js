@@ -2,11 +2,21 @@
 
 const htmlResponses = require('./loadFiles.js');
 
+//book storage:
+const { books } = require('./loadFiles.js');
+
 const handleGET = (pathname, request, response) => {
     if (pathname === '/getBooks') return getBooksGET(request, response);
+
+    //TODO update these endpoints/methods
+    //TODO add query paramater support to one of these
+    if (pathname === '/getBooksByTitle') return getBooksGET(request, response);
+    if (pathname === '/getBooksByAuthor') return getBooksGET(request, response);
+    if (pathname === '/getBooksByYear') return getBooksGET(request, response);
+
     if (pathname === '/notReal') return notRealGET(request, response);
     if (pathname === '/') return htmlResponses.getIndex(request, response);
-    if (pathname === '/style.css') return htmlResponses.getCss(request, response);  
+    if (pathname === '/style.css') return htmlResponses.getCss(request, response);
     if (pathname === '/client.js') return htmlResponses.getClientJS(request, response);
 
     return notFoundGET(request, response);
@@ -21,12 +31,11 @@ const handleHEAD = (pathname, request, response) => {
 
 const handlePOST = (pathname, request, response) => {
     if (pathname === '/addBook') return addBookPOST(request, response);
+    //TODO update the endpoints/methods
+    if (pathname === '/editBook') return addBookPOST(request, response);
 
     return notFoundGET(request, response);
 };
-
-//book storage:
-const books = {};
 
 //GET books JSON
 const getBooksGET = (request, response) => {
@@ -35,7 +44,7 @@ const getBooksGET = (request, response) => {
     console.log("getBooksGET called");
     console.log(JSON.stringify(responseJSON));
 
-    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(responseJSON) });
     response.write(JSON.stringify(responseJSON));
     response.end();
 };
@@ -72,7 +81,14 @@ const addBookPOST = (request, response) => {
     });
 
     request.on('end', () => {
-        const parsed = JSON.parse(body);
+
+        //supports either content type
+        if (request.headers['content-type'] === 'application/json') {
+            parsed = JSON.parse(body);
+        } else if (request.headers['content-type'] === 'application/x-www-form-urlencoded') {
+            parsed = Object.fromEntries(new URLSearchParams(body));
+        }
+
         const { author, country, language, link, pages, title, year, genres } = parsed;
 
         if (!author || !country || !language || !link || !pages || !title || !year || !genres) {
