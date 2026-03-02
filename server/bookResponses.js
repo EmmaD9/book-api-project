@@ -6,7 +6,8 @@ const handleGET = (pathname, request, response) => {
     if (pathname === '/getBooks') return getBooksGET(request, response);
     if (pathname === '/notReal') return notRealGET(request, response);
     if (pathname === '/') return htmlResponses.getIndex(request, response);
-    if (pathname === '/style.css') return htmlResponses.getCss(request, response);
+    if (pathname === '/style.css') return htmlResponses.getCss(request, response);  
+    if (pathname === '/client.js') return htmlResponses.getClientJS(request, response);
 
     return notFoundGET(request, response);
 };
