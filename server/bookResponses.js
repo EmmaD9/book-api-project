@@ -173,10 +173,11 @@ const getYearGET = (request, response) => {
     }
 
     //find book via year
-    const book = books.find(
-        (b) => b.year === year
-    );
+    const yearNum = parseInt(year, 10);
 
+    const book = books.find(
+        (b) => b.year === yearNum
+    );
 
     if (!book) {
         const responseJSON = {
