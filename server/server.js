@@ -20,7 +20,22 @@ const onRequest = (request, response) => {
 
     const { pathname } = parsedUrl;
 
+    //static webpages
+    if (pathname === '/' || pathname === '/index.html') {
+        return loadFiles.getIndex(request, response);
+    }
+
+    if (pathname === '/client.js') {
+        return loadFiles.getClientJS(request, response);
+    }
+
+    if (pathname === '/style.css') {
+        return loadFiles.getCSS(request, response);
+    }
+
+
     //method and path routes
+    
     if (request.method === 'GET') {
         dataResponses.handleGET(pathname, request, response);
     } else if (request.method === 'HEAD') {

@@ -1,3 +1,19 @@
+async function getBooks() {
+    const content = document.querySelector('#get-books-content');
+
+    const response = await fetch('/getBooks');
+    
+    const data = await response.json();
+    let jsonString = JSON.stringify(data);
+    content.innerHTML += `<p>${jsonString}</p>`;
+    //console.log(data);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    getBooks();
+});
+
+/*
 //Referencing the script element in the client.html of hw 2
 
 const handleResponse = async (response, shouldParse) => {
@@ -102,3 +118,4 @@ const init = () => {
 };
 
 window.onload = init;
+*/
