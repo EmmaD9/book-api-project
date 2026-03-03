@@ -1,6 +1,16 @@
-async function getBooks() {
-    const content = document.querySelector('#get-books-content');
+//button definitions
+const getBooksBtn = document.getElementById('get-books-button');
+const getAuthorsBtn = document.getElementById('get-authors-button');
+const getTitlesBtn = document.getElementById('get-titles-button');
+const getYearsBtn = document.getElementById('get-years-button');
 
+
+
+const headBooksBtn = document.getElementById('head-books-button');
+
+async function getBooks() {
+    const content = document.querySelector('#books-content');
+    content.innerHTML = '';
     const response = await fetch('/getBooks');
     
     const data = await response.json();
@@ -9,8 +19,84 @@ async function getBooks() {
     //console.log(data);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function headBooks() {
+    const content = document.querySelector('#books-content');
+    content.innerHTML = '';
+    const response = await fetch('/getBooks', {
+        method: 'HEAD'
+    });
+
+    content.innerHTML += `
+        <p>HEAD /getBooks → Status: ${response.status}</p>
+    `;
+}
+
+async function getAuthors() {
+    const content = document.querySelector('#authors-content');
+    content.innerHTML = '';
+    //TODO: get input here
+    const response = await fetch('/getBooksByAuthor');
+
+    const data = await response.json();
+    let jsonString = JSON.stringify(data);
+    content.innerHTML += `<p>${jsonString}</p>`;
+    //console.log(data);
+}
+
+
+async function getTitles() {
+    const content = document.querySelector('#titles-content');
+    content.innerHTML = '';
+
+    //TODO: get input here
+    const response = await fetch('/getBooksByTitle');
+
+    const data = await response.json();
+    let jsonString = JSON.stringify(data);
+    content.innerHTML += `<p>${jsonString}</p>`;
+    //console.log(data);
+}
+
+async function getYears() {
+    const content = document.querySelector('#years-content');
+    content.innerHTML = '';
+    //TODO: get input here
+    const response = await fetch('/getBooksByYear');
+
+    const data = await response.json();
+    let jsonString = JSON.stringify(data);
+    content.innerHTML += `<p>${jsonString}</p>`;
+    //console.log(data);
+}
+
+
+async function getBooks() {
+    const content = document.querySelector('#books-content');
+    content.innerHTML = '';
+    
+    const response = await fetch('/getBooks');
+
+    const data = await response.json();
+    let jsonString = JSON.stringify(data);
+    content.innerHTML += `<p>${jsonString}</p>`;
+    //console.log(data);
+}
+
+
+getBooksBtn.addEventListener('click', () => {
     getBooks();
+});
+getAuthorsBtn.addEventListener('click', () => {
+    getAuthors();
+});
+getTitlesBtn.addEventListener('click', () => {
+    getTitles();
+});
+getYearsBtn.addEventListener('click', () => {
+    getYears();
+});
+headBooksBtn.addEventListener('click', () => {
+    headBooks();
 });
 
 /*

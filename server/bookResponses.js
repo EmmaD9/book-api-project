@@ -32,7 +32,6 @@ const handleHEAD = (pathname, request, response) => {
 
 const handlePOST = (pathname, request, response) => {
     if (pathname === '/addBook') return addBookPOST(request, response);
-    //TODO update the endpoints/methods
     if (pathname === '/editBook') return editBookPOST(request, response);
 
     return notFoundGET(request, response);
@@ -206,7 +205,8 @@ const getYearGET = (request, response) => {
 
 //GET books JSON but with no body
 const getBooksHEAD = (request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(response)) });
+    const data = JSON.stringify({books});
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
     response.end();
 };
 
