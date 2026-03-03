@@ -15,7 +15,7 @@
 <body class="cursor"> 
     <header class="hero is-small is-info is-bold p-2">
         <div class="hero-body">
-            <a href="">
+            <a href="documentation.html" target="_blank">
                 <span class="icon-text">
                     <span class="icon">
                         <i class="fa-solid fa-bookmark"></i>
@@ -66,7 +66,9 @@
                 </span>
                 <span class="subtitle">Find Books by Author</span>
             </span>
-            <br>
+            <br><br>
+            <input class="input" type="text" id = "author-input" placeholder="Author" />
+            <br><br>
             <div class="button" id="get-authors-button">GET</div>
             <div class="button" id="head-authors-button">HEAD</div>
             <div id="authors-content"></div>
@@ -84,7 +86,9 @@
                 </span>
                 <span class="subtitle">Find Books by Title</span>
             </span>
-            <br>
+            <br><br>
+            <input class="input" type="text" id="title-input" placeholder="Title" />
+            <br><br>
             <div class="button" id="get-titles-button">GET</div>
             <div class="button" id="head-titles-button">HEAD</div>
             <div id="titles-content"></div>
@@ -101,7 +105,9 @@
                 </span>
                 <span class="subtitle">Find Books by Year</span>
             </span>
-            <br>
+            <br><br>
+            <input class="input" type="number" id="title-input" placeholder="Year Published" />
+            <br><br>
             <div class="button" id="get-years-button">GET</div>
             <div class="button" id="head-years-button">HEAD</div>
             <div id="years-content"></div>

@@ -224,6 +224,11 @@ const notRealGET = (request, response) => {
 
 //head not real
 const notRealHEAD = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    };
+
     response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.end();
 }
