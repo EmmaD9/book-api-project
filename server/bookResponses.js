@@ -25,6 +25,9 @@ const handleGET = (pathname, request, response) => {
 
 const handleHEAD = (pathname, request, response) => {
     if (pathname === '/getBooks') return getBooksHEAD(request, response);
+    if (pathname === '/getBooksByTitle') return getTitleHEAD(request, response);
+    if (pathname === '/getBooksByAuthor') return getAuthorHEAD(request, response);
+    if (pathname === '/getBooksByYear') return getYearHEAD(request, response);
     if (pathname === '/notReal') return notRealHEAD(request, response);
 
     return notFoundHEAD(request, response);
@@ -210,6 +213,24 @@ const getBooksHEAD = (request, response) => {
     response.end();
 };
 
+const getTitleHEAD = (request, response) => {
+    const data = JSON.stringify({ books });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    response.end();
+};
+
+const getAuthorHEAD = (request, response) => {
+    const data = JSON.stringify({ books });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    response.end();
+};
+
+const getYearHEAD = (request, response) => {
+    const data = JSON.stringify({ books });
+    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    response.end();
+};
+
 //get not real for JSON error
 const notRealGET = (request, response) => {
     const responseJSON = {
@@ -389,6 +410,11 @@ const notFoundGET = (request, response) => {
 
 //HEAD 404 version with no body
 const notFoundHEAD = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    }
+    
     response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.end();
 };

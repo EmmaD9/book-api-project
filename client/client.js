@@ -5,14 +5,16 @@ const getTitlesBtn = document.getElementById('get-titles-button');
 const getYearsBtn = document.getElementById('get-years-button');
 
 
-
 const headBooksBtn = document.getElementById('head-books-button');
+const headAuthorsBtn = document.getElementById('head-authors-button');
+const headTitlesBtn = document.getElementById('head-titles-button');
+const headYearsBtn = document.getElementById('head-years-button');
 
 async function getBooks() {
     const content = document.querySelector('#books-content');
     content.innerHTML = '';
     const response = await fetch('/getBooks');
-    
+
     const data = await response.json();
     let jsonString = JSON.stringify(data);
     content.innerHTML += `<p>${jsonString}</p>`;
@@ -31,31 +33,63 @@ async function headBooks() {
     `;
 }
 
+async function headNotReal() {
+    const response = await fetch('/notReal', { method: 'HEAD' });
+
+    console.log("HEAD /notReal status:", response.status);
+}
+
 async function getAuthors() {
     const content = document.querySelector('#authors-content');
     content.innerHTML = '';
-    //TODO: get input here
-    const response = await fetch('/getBooksByAuthor');
+    
+    const input = document.querySelector('#author-input').value;
+
+    const response = await fetch(`/getBooksByAuthor?author=${encodeURIComponent(input)}`);
 
     const data = await response.json();
     let jsonString = JSON.stringify(data);
     content.innerHTML += `<p>${jsonString}</p>`;
-    //console.log(data);
+    console.log(data);
 }
 
+async function headAuthors(author) {
+    const response = await fetch(`/getBooksByAuthor?title=${encodeURIComponent(author)}`, {
+        method: 'HEAD'
+    });
+    const content = document.querySelector('#authors-content');
+    content.innerHTML = '';
+
+    content.innerHTML += `
+        <p>HEAD /getBooks → Status: ${response.status}</p>
+    `;
+}
 
 async function getTitles() {
     const content = document.querySelector('#titles-content');
     content.innerHTML = '';
 
-    //TODO: get input here
-    const response = await fetch('/getBooksByTitle');
+    const input = document.querySelector('#title-input').value;
+    const response = await fetch(`/getBooksByTitle?title=${encodeURIComponent(input)}`);
 
     const data = await response.json();
     let jsonString = JSON.stringify(data);
     content.innerHTML += `<p>${jsonString}</p>`;
     //console.log(data);
 }
+
+async function headTitles(title) {
+    const response = await fetch(`/getBooksByTitle?title=${encodeURIComponent(title)}`, {
+        method: 'HEAD'
+    });
+    const content = document.querySelector('#titles-content');
+    content.innerHTML = '';
+
+    content.innerHTML += `
+        <p>HEAD /getBooks → Status: ${response.status}</p>
+    `;
+}
+
 
 async function getYears() {
     const content = document.querySelector('#years-content');
@@ -69,11 +103,20 @@ async function getYears() {
     //console.log(data);
 }
 
+async function headYears(title) {
+    const response = await fetch(`/getBooksByYear?year=${encodeURIComponent(year)}`, {
+        method: 'HEAD'
+    });
+
+    //console.log("HEAD /getBooksByTitle status:", response.status);
+}
+
+
 
 async function getBooks() {
     const content = document.querySelector('#books-content');
     content.innerHTML = '';
-    
+
     const response = await fetch('/getBooks');
 
     const data = await response.json();
@@ -95,10 +138,20 @@ getTitlesBtn.addEventListener('click', () => {
 getYearsBtn.addEventListener('click', () => {
     getYears();
 });
+
+
 headBooksBtn.addEventListener('click', () => {
     headBooks();
 });
-
+headAuthorsBtn.addEventListener('click', () => {
+    headAuthors();
+});
+headTitlesBtn.addEventListener('click', () => {
+    headTitles();
+});
+headYearsBtn.addEventListener('click', () => {
+    headYears();
+});
 /*
 //Referencing the script element in the client.html of hw 2
 
