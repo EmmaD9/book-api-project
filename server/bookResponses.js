@@ -298,6 +298,8 @@ const getYearHEAD = (request, response) => {
         return response.end();
     }
 
+    const yearNum = parseInt(year, 10);
+    
     const book = books.find(
         (b) => b.year === yearNum
     );

@@ -99,7 +99,9 @@ async function headNotReal() {
     console.log("HEAD /notReal status:", response.status);
 }
 
-async function headAuthors(author) {
+async function headAuthors() {
+    const author = document.querySelector('#author-input').value;
+
     const response = await fetch(`/getBooksByAuthor?author=${encodeURIComponent(author)}`, {
         method: 'HEAD'
     });
@@ -111,26 +113,32 @@ async function headAuthors(author) {
     `;
 }
 
-async function headTitles(title) {
+async function headTitles() {
     const content = document.querySelector('#titles-content');
     content.innerHTML = '';
 
-    const input = document.querySelector('#title-input').value;
+    const title = document.querySelector('#title-input').value;
 
     const response = await fetch(`/getBooksByTitle?title=${encodeURIComponent(title)}`, {
         method: 'HEAD'
     });
     content.innerHTML += `
-        <p>HEAD /getBooks → Status: ${response.status}</p>
+        <p>HEAD /getBooksByTitle → Status: ${response.status}</p>
     `;
 }
 
-async function headYears(title) {
+async function headYears() {
+    const content = document.querySelector('#years-content');
+    content.innerHTML = '';
+
+    const year = document.querySelector('#year-input').value;
+
     const response = await fetch(`/getBooksByYear?year=${encodeURIComponent(year)}`, {
         method: 'HEAD'
     });
-
-    //console.log("HEAD /getBooksByTitle status:", response.status);
+    content.innerHTML += `
+        <p>HEAD /getBooksByYear → Status: ${response.status}</p>
+    `;
 }
 
 //button linking
