@@ -35,7 +35,6 @@ const onRequest = (request, response) => {
 
 
     //method and path routes
-    
     if (request.method === 'GET') {
         dataResponses.handleGET(pathname, request, response);
     } else if (request.method === 'HEAD') {

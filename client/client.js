@@ -48,8 +48,9 @@ async function getTitles() {
 async function getYears() {
     const content = document.querySelector('#years-content');
     content.innerHTML = '';
-    //TODO: get input here
-    const response = await fetch('/getBooksByYear');
+
+    const input = document.querySelector('#year-input').value;
+    const response = await fetch(`/getBooksByYear?year=${encodeURIComponent(input)}`);
 
     const data = await response.json();
     let jsonString = JSON.stringify(data);
@@ -133,7 +134,7 @@ async function headYears(title) {
 }
 
 //button linking
-headBooksBtn.addEventListener('click', () => {
+ headBooksBtn.addEventListener('click', () => {
     headBooks();
 });
 headAuthorsBtn.addEventListener('click', () => {
