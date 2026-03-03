@@ -5,6 +5,8 @@ const htmlResponses = require('./loadFiles.js');
 //book storage:
 const { books } = require('./loadFiles.js');
 
+
+//HANDLERS
 const handleGET = (pathname, request, response) => {
 
     //GET endpoints:
@@ -40,7 +42,7 @@ const handlePOST = (pathname, request, response) => {
     return notFoundPOST(request, response);
 };
 
-//GET books JSON
+//GET METHODS
 const getBooksGET = (request, response) => {
     const responseJSON = { books };
 
@@ -206,7 +208,32 @@ const getYearGET = (request, response) => {
     response.end();
 }
 
-//GET books JSON but with no body
+//get not real for JSON error
+const notRealGET = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    };
+
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
+    response.write(JSON.stringify(responseJSON));
+    response.end();
+};
+
+//GET 404 error page with JSON
+const notFoundGET = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    }
+
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
+    response.write(JSON.stringify(responseJSON));
+    response.end();
+}
+
+
+//HEAD METHODS
 const getBooksHEAD = (request, response) => {
     const data = JSON.stringify({ books });
     response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
@@ -318,18 +345,6 @@ const getYearHEAD = (request, response) => {
     response.end();
 };
 
-//get not real for JSON error
-const notRealGET = (request, response) => {
-    const responseJSON = {
-        message: 'The page you are looking for was not found',
-        id: 'notFound',
-    };
-
-    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
-    response.write(JSON.stringify(responseJSON));
-    response.end();
-};
-
 //head not real
 const notRealHEAD = (request, response) => {
     const responseJSON = {
@@ -341,6 +356,19 @@ const notRealHEAD = (request, response) => {
     response.end();
 }
 
+//HEAD 404 version with no body
+const notFoundHEAD = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    }
+
+    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
+    response.end();
+};
+
+
+//POST METHODS
 const addBookPOST = (request, response) => {
     let body = '';
 
@@ -509,29 +537,6 @@ const editBookPOST = (request, response) => {
         }
 
     });
-};
-
-//GET 404 error page with JSON
-const notFoundGET = (request, response) => {
-    const responseJSON = {
-        message: 'The page you are looking for was not found',
-        id: 'notFound',
-    }
-
-    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
-    response.write(JSON.stringify(responseJSON));
-    response.end();
-}
-
-//HEAD 404 version with no body
-const notFoundHEAD = (request, response) => {
-    const responseJSON = {
-        message: 'The page you are looking for was not found',
-        id: 'notFound',
-    }
-
-    response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
-    response.end();
 };
 
 const notFoundPOST = (request, response) => {
