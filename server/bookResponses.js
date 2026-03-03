@@ -386,17 +386,40 @@ const addBookPOST = (request, response) => {
             return response.end();
         }
 
-        //TODO: fix this it's broken: create new book
-        books[title] = {
+
+        //check if the book exists
+        const existing = books.find(
+            (b) => b.title.toLowerCase() === title.toLowerCase()
+        );
+
+        if (existing) {
+            const responseJSON = {
+                message: `A book with title '${title}' already exists.`,
+                id: 'alreadyExists',
+            };
+            const data = JSON.stringify(responseJSON);
+
+            //i think this is the right error code?
+            response.writeHead(400, {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(data),
+            });
+            response.write(data);
+            return response.end();
+        }
+
+        // add new book to array
+        books.push({
             author,
             country,
             language,
             link,
-            pages,
+            pages: Number(pages),
             title,
-            year,
+            year: Number(year),
             genres,
-        };
+        });
+
 
         const responseJSON = { message: 'Created Successfully' };
 
