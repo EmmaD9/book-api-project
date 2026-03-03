@@ -61,7 +61,7 @@ const getTitleGET = (request, response) => {
             message: 'Title is required for search',
             id: 'missingParams',
         };
-        
+
         const data = JSON.stringify(responseJSON);
 
         response.writeHead(400, {
@@ -208,26 +208,111 @@ const getYearGET = (request, response) => {
 
 //GET books JSON but with no body
 const getBooksHEAD = (request, response) => {
-    const data = JSON.stringify({books});
+    const data = JSON.stringify({ books });
     response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
     response.end();
 };
 
 const getTitleHEAD = (request, response) => {
-    const data = JSON.stringify({ books });
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    const { title } = request.query;
+
+    if (!title) {
+        const data = JSON.stringify({
+            message: 'Title is required for search',
+            id: 'missingParams',
+        });
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        return response.end();
+    }
+
+    const book = books.find(
+        (b) => b.title.toLowerCase() === title.toLowerCase()
+    );
+
+    const data = JSON.stringify(
+        book
+            ? { book }
+            : { message: `No book found with title: '${title}'.`, id: 'notFound' }
+    );
+
+    response.writeHead(book ? 200 : 404, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+
     response.end();
+
 };
 
 const getAuthorHEAD = (request, response) => {
-    const data = JSON.stringify({ books });
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    const { author } = request.query;
+
+    if (!author) {
+        const data = JSON.stringify({
+            message: 'Author is required for search',
+            id: 'missingParams',
+        });
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        return response.end();
+    }
+
+    const book = books.find(
+        (b) => b.author.toLowerCase() === author.toLowerCase()
+    );
+
+    const data = JSON.stringify(
+        book
+            ? { book }
+            : { message: `No book found with author: '${author}'.`, id: 'notFound' }
+    );
+
+    response.writeHead(book ? 200 : 404, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+
     response.end();
 };
 
 const getYearHEAD = (request, response) => {
-    const data = JSON.stringify({ books });
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+    const { year } = request.query;
+
+    if (!year) {
+        const data = JSON.stringify({
+            message: 'Year is required for search',
+            id: 'missingParams',
+        });
+
+        response.writeHead(400, {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+        });
+        return response.end();
+    }
+
+    const book = books.find(
+        (b) => b.year === yearNum
+    );
+
+    const data = JSON.stringify(
+        book
+            ? { book }
+            : { message: `No book found with year: '${year}'.`, id: 'notFound' }
+    );
+
+    response.writeHead(book ? 200 : 404, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+
     response.end();
 };
 
@@ -332,7 +417,7 @@ const editBookPOST = (request, response) => {
         let parsed;
         //supports either content type
         if (request.headers['content-type'] === 'application/json') {
-            
+
             try {
                 parsed = JSON.parse(body);
             } catch (err) {
@@ -414,7 +499,7 @@ const notFoundHEAD = (request, response) => {
         message: 'The page you are looking for was not found',
         id: 'notFound',
     }
-    
+
     response.writeHead(404, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.end();
 };
