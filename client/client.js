@@ -13,8 +13,8 @@ async function getBooks() {
     const response = await fetch('/getBooks');
 
     const data = await response.json();
-    let jsonString = JSON.stringify(data);
-    content.innerHTML += `<p>${jsonString}</p>`;
+    let jsonString = JSON.stringify(data, null, 2);
+    content.innerHTML += `<pre>${jsonString}</pre>`;
     //console.log(data);
 }
 
@@ -27,8 +27,8 @@ async function getAuthors() {
     const response = await fetch(`/getBooksByAuthor?author=${encodeURIComponent(input)}`);
 
     const data = await response.json();
-    let jsonString = JSON.stringify(data);
-    content.innerHTML += `<p>${jsonString}</p>`;
+    let jsonString = JSON.stringify(data, null, 2);
+    content.innerHTML += `<pre>${jsonString}</pre>`;
     console.log(data);
 }
 
@@ -40,8 +40,8 @@ async function getTitles() {
     const response = await fetch(`/getBooksByTitle?title=${encodeURIComponent(input)}`);
 
     const data = await response.json();
-    let jsonString = JSON.stringify(data);
-    content.innerHTML += `<p>${jsonString}</p>`;
+    let jsonString = JSON.stringify(data, null, 2);
+    content.innerHTML += `<pre>${jsonString}</pre>`;
     //console.log(data);
 }
 
@@ -53,8 +53,8 @@ async function getYears() {
     const response = await fetch(`/getBooksByYear?year=${encodeURIComponent(input)}`);
 
     const data = await response.json();
-    let jsonString = JSON.stringify(data);
-    content.innerHTML += `<p>${jsonString}</p>`;
+    let jsonString = JSON.stringify(data, null, 2);
+    content.innerHTML += `<pre>${jsonString}</pre>`;
     //console.log(data);
 }
 

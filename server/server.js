@@ -33,6 +33,10 @@ const onRequest = (request, response) => {
         return loadFiles.getCSS(request, response);
     }
 
+    if (pathname === '/documentation.html') {
+        return loadFiles.getDocumentation(request, response);
+    }
+
 
     //method and path routes
     if (request.method === 'GET') {

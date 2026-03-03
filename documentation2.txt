@@ -1,0 +1,20 @@
+What dataset are you using?
+I am using the books.json data set
+
+What went right in the development of this project?
+
+
+What went wrong in the development of this project?
+I did have to recview some of the different server concepts-
+
+What did you learn while developing this project?
+
+
+If you went above and beyond, how did you do so?
+
+
+If you used any borrowed code or code fragments, where did you get them from?
+
+
+What do the code fragments do? Where are they in your code?
+for server.js: used base from office hours convo and http api assignment 2
