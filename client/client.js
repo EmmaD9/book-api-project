@@ -190,9 +190,48 @@ async function addBook() {
     content.innerHTML = `<p>Status: ${response.status}</p><p>${JSON.stringify(data)}</p>`;
 }
 
+async function editBook() {
+    const content = document.querySelector('#edit-book-content');
+    content.innerHTML = '';
+
+    const book = {
+        title: document.querySelector('#edit-title').value,
+        author: document.querySelector('#edit-author').value,
+        country: document.querySelector('#edit-country').value,
+        language: document.querySelector('#edit-language').value,
+        link: document.querySelector('#edit-link').value,
+        pages: document.querySelector('#edit-pages').value,
+        year: document.querySelector('#edit-year').value,
+        genres: document.querySelector('#edit-genres').value,
+    };
+
+    const response = await fetch('/editBook', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(book),
+    });
+
+    //if the book exists and can be updated
+    if (response.status === 204) {
+        content.innerHTML = `<p>Status: 204 (Updated Successfully)</p>`;
+        return;
+    }
+
+
+    const data = await response.json();
+
+    content.innerHTML = `<p>Status: ${response.status}</p><p>${JSON.stringify(data)}</p>`;
+}
+
 
 //button linking
 addBooksBtn.addEventListener('click', () => {
-    console.log('a book should add');
+    //console.log('a book should add');
     addBook();
+});
+
+editBooksBtn.addEventListener('click', () =>{
+    editBook();
 });

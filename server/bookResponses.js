@@ -386,7 +386,7 @@ const addBookPOST = (request, response) => {
             return response.end();
         }
 
-        // create new book
+        //TODO: fix this it's broken: create new book
         books[title] = {
             author,
             country,
@@ -455,19 +455,24 @@ const editBookPOST = (request, response) => {
         }
 
         //updates the book if it can find the title!
-        const bookExists = books[title];
+        const book = books.find(
+            (b) => b.title.toLowerCase() === title.toLowerCase()
+        );
 
-        if (bookExists) {
-            books[title].author = author;
-            books[title].country = country;
-            books[title].language = language;
-            books[title].link = link;
-            books[title].pages = pages;
-            books[title].title = title;
-            books[title].year = year;
-            books[title].genres = genres;
 
-            response.writeHead(204, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
+        if (book) {
+            book.author = author;
+            book.country = country;
+            book.language = language;
+            book.link = link;
+            book.pages = pages;
+            book.title = title;
+            book.year = year;
+            book.genres = genres;
+
+            //i think this is the right response code?
+            response.writeHead(204);
+
             return response.end();
         } else {
             const responseJSON = {
