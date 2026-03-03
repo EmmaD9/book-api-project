@@ -12,7 +12,7 @@
 
 </head>
 
-<body> 
+<body>
     <header class="hero is-small is-info is-bold p-2">
         <div class="hero-body">
             <a href="documentation.html" target="_blank">
@@ -25,7 +25,8 @@
             <div class="container">
                 <h1 class="title">Book Data API</h1>
                 <br>
-                <h2 class="subtitle">A Node.js web server that both hosts static files such as HTML, and hosts a backend web API from a JSON file about books.</h2>
+                <h2 class="subtitle">A Node.js web server that both hosts static files such as HTML, and hosts a backend
+                    web API from a JSON file about books.</h2>
             </div>
         </div>
     </header>
@@ -62,7 +63,7 @@
                 <span class="subtitle">Find Books by Author</span>
             </span>
             <br><br>
-            <input class="input" type="text" id = "author-input" placeholder="Author" />
+            <input class="input" type="text" id="author-input" placeholder="Author" />
             <br><br>
             <div class="button" id="get-authors-button">GET</div>
             <div class="button" id="head-authors-button">HEAD</div>
@@ -111,7 +112,59 @@
             <div id="years-content"></div>
         </div>
     </div>
-    
+
+    <br>
+
+    <div class="container">
+        <div class="notification is-primary">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+                <span class="subtitle">Add a Book</span>
+            </span>
+            <br><br>
+            <input class="input" type="text" id="add-author" placeholder="Author" />
+            <input class="input" type="text" id="add-country" placeholder="Country" />
+            <input class="input" type="text" id="add-language" placeholder="Language" />
+            <input class="input" type="text" id="add-link" placeholder="Link" />
+            <input class="input" type="number" id="add-pages" placeholder="Pages" />
+            <input class="input" type="text" id="add-title" placeholder="Title" />
+            <input class="input" type="number" id="add-year" placeholder="Year" />
+            <input class="input" type="text" id="add-genres" placeholder="Genres" />
+            <br><br>
+            <div class="button" id="add-book-btn">POST</div>
+            <br>
+            <div id="add-book-content"></div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <div class="notification is-primary">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="fa-solid fa-pencil"></i>
+                </span>
+                <span class="subtitle">Edit a Book</span>
+            </span>
+            <br><br>
+            <input class="input" type="text" id="edit-author" placeholder="Author" />
+            <input class="input" type="text" id="edit-title" placeholder="Country" />
+            <input class="input" type="text" id="edit-language" placeholder="Language" />
+            <input class="input" type="text" id="edit-link" placeholder="Link" />
+            <input class="input" type="number" id="edit-pages" placeholder="Pages" />
+            <input class="input" type="text" id="edit-title" placeholder="Title" />
+            <input class="input" type="number" id="edit-year" placeholder="Year" />
+            <input class="input" type="text" id="edit-genres" placeholder="Genres" />
+            <br><br>
+            <div class="button" id="edit-book-btn">POST</div>
+            <br>
+            <div id="edit-book-content"></div>
+        </div>
+    </div>
+
 </body>
 
 

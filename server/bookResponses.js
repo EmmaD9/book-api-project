@@ -37,7 +37,7 @@ const handlePOST = (pathname, request, response) => {
     if (pathname === '/addBook') return addBookPOST(request, response);
     if (pathname === '/editBook') return editBookPOST(request, response);
 
-    return notFoundGET(request, response);
+    return notFoundPOST(request, response);
 };
 
 //GET books JSON
@@ -299,7 +299,7 @@ const getYearHEAD = (request, response) => {
     }
 
     const yearNum = parseInt(year, 10);
-    
+
     const book = books.find(
         (b) => b.year === yearNum
     );
@@ -506,6 +506,23 @@ const notFoundHEAD = (request, response) => {
     response.end();
 };
 
+const notFoundPOST = (request, response) => {
+    const responseJSON = {
+        message: 'The page you are looking for was not found',
+        id: 'notFound',
+    };
+
+    const data = JSON.stringify(responseJSON);
+
+    response.writeHead(404, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(data),
+    });
+
+    response.write(data);
+    response.end();
+};
+
 module.exports = {
     handleGET,
     handleHEAD,
@@ -516,5 +533,6 @@ module.exports = {
     notRealHEAD,
     addBookPOST,
     notFoundGET,
-    notFoundHEAD
+    notFoundHEAD,
+    notFoundPOST
 }

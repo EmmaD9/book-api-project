@@ -154,3 +154,45 @@ headTitlesBtn.addEventListener('click', () => {
 headYearsBtn.addEventListener('click', () => {
     headYears();
 });
+
+//POST
+
+//button definitions
+const addBooksBtn = document.getElementById('add-book-btn');
+const editBooksBtn = document.getElementById('edit-book-btn');
+
+//methods
+async function addBook() {
+    const content = document.querySelector('#add-book-content');
+    content.innerHTML = '';
+
+    const book = {
+        title: document.querySelector('#add-title').value,
+        author: document.querySelector('#add-author').value,
+        country: document.querySelector('#add-country').value,
+        language: document.querySelector('#add-language').value,
+        link: document.querySelector('#add-link').value,
+        pages: document.querySelector('#add-pages').value,
+        year: document.querySelector('#add-year').value,
+        genres: document.querySelector('#add-genres').value,
+    };
+
+    const response = await fetch('/addBook', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(book),
+    });
+
+    const data = await response.json();
+
+    content.innerHTML = `<p>Status: ${response.status}</p><p>${JSON.stringify(data)}</p>`;
+}
+
+
+//button linking
+addBooksBtn.addEventListener('click', () => {
+    console.log('a book should add');
+    addBook();
+});
