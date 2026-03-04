@@ -8,14 +8,13 @@
     <title>Book Data API: Documentation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="/client.js" defer></script>
 
 </head>
 
 <body>
     <header class="hero is-small is-info is-bold p-2">
         <div class="hero-body">
-            <a href="client.html" target="_blank">
+            <a href="/" target="_blank">
                 <span class="icon-text has-text-black">
                     <span class="icon">
                         <i class="fa-solid fa-bookmark"></i>
@@ -51,10 +50,40 @@
             <div class="subtitle is-4">Query Params</div>
             <div class="subtitle">None!</div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">A JSON array of film name strings. Format: [string]</div>
+            <div class="subtitle">A JSON array of book information in a JSON "pretty" format</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+            <div class="subtitle">
+                <pre><code>
+                "books": [
+                {
+                    "author": "Chinua Achebe",
+                    "country": "Nigeria",
+                    "language": "English",
+                    "link": "https://en.wikipedia.org/wiki/Things_Fall_Apart\n",
+                    "pages": 209,
+                    "title": "Things Fall Apart",
+                    "year": 1958,
+                    "genres": [
+                        "Historical Fiction",
+                        "Postcolonial Literature"
+                        ]
+                },
+                {
+                    "author": "Hans Christian Andersen",
+                    "country": "Denmark",
+                    "language": "Danish",
+                    "link": "https://en.wikipedia.org/wiki/Fairy_Tales_Told_for_Children._First_Collection.\n",
+                    "pages": 784,
+                    "title": "Fairy tales",
+                    "year": 1836,
+                    "genres": [
+                        "Fairy Tales",
+                        "Children's Literature"
+                        ]
+                }, ...
+                </code></pre>
+            </div>
+
             <br>
         </div>
     </div>
@@ -71,14 +100,34 @@
             </span>
             <br><br>
             <div class="subtitle is-4">Query Params</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">Author [string]</div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">A JSON book array in a JSON "pretty" format</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+
+            <div class="subtitle">
+                Paul Celan ->
+                <pre><code>
+                    {
+                        "book": {
+                        "author": "Paul Celan",
+                        "country": "Romania, France",
+                        "language": "German",
+                        "link": "\n",
+                        "pages": 320,
+                        "title": "Poems",
+                        "year": 1952,
+                        "genres": [
+                            "Poetry",
+                            "Existentialism"
+                            ]
+                        }
+                    }
+                </code></pre>
+            </div>
+
             <br>
-            
+
         </div>
     </div>
 
@@ -94,12 +143,31 @@
             </span>
             <br><br>
             <div class="subtitle is-4">Query Params</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">Title [string]</div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">A JSON book array in a JSON "pretty" format</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+            <div class="subtitle">
+                The Epic Of Gilgamesh ->
+
+                <pre><code>
+                    {
+                        "author": "Unknown",
+                        "country": "Sumer and Akkadian Empire",
+                        "language": "Akkadian",
+                        "link": "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh\n",
+                        "pages": 160,
+                        "title": "The Epic Of Gilgamesh",
+                        "year": -1700,
+                        "genres": [
+                            "Epic Poetry",
+                            "Mythology"
+                            ]
+                    }
+                </code></pre>
+
+            </div>
+
             <br>
         </div>
     </div>
@@ -116,12 +184,28 @@
             </span>
             <br><br>
             <div class="subtitle is-4">Query Params</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">Year [integer]</div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">A JSON book array in a JSON "pretty" format</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+            <div class="subtitle">1200 ->
+                <pre><code>
+                    {
+                        "author": "Unknown",
+                        "country": "India/Iran/Iraq/Egypt/Tajikistan",
+                        "language": "Arabic",
+                        "link": "https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights\n",
+                        "pages": 288,
+                        "title": "One Thousand and One Nights",
+                        "year": 1200,
+                        "genres": [
+                            "Folk Tales",
+                            "Mythology"
+                            ]
+                    }
+                </code></pre>
+            </div>
+
             <br>
         </div>
     </div>
@@ -138,12 +222,34 @@
             </span>
             <br><br>
             <div class="subtitle is-4">Query Params</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">
+                <pre>
+                    Author [string]
+                    Country [string]
+                    Language [string]
+                    Link [string]
+                    Pages [integer]
+                    Title [string]
+                    Year [integer]
+                    Genre [string]
+                </pre>
+            </div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">POST Status Code; If successful will update JSON database with new book</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+            <div class="subtitle">
+                <pre><code>
+                    Status: 400
+                    {"message":"Author, country, language, link, pages, title, year, genres are all required.","id":"missingParams"}
+
+                </code></pre>
+                <br>
+                <pre><code>
+                    Status: 201
+                    {"message":"Created Successfully"}
+                </code></pre>
+            </div>
+
             <br>
         </div>
     </div>
@@ -160,12 +266,33 @@
             </span>
             <br><br>
             <div class="subtitle is-4">Query Params</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">
+                <pre>
+                    Author [string]
+                    Country [string]
+                    Language [string]
+                    Link [string]
+                    Pages [integer]
+                    Title [string]
+                    Year [integer]
+                    Genre [string]
+                </pre>
+            </div>
             <div class="subtitle is-4">Returns</div>
-            <div class="subtitle">sdfsdf</div>
+            <div class="subtitle">POST Status Code; If successful will update JSON database with new information</div>
             <div class="subtitle is-4">Examples</div>
-            <div class="subtitle">sdfsdf</div>
-            
+            <div class="subtitle">
+                <pre><code>
+                   Status: 201
+                    {"message":"Created Successfully"}
+                </code></pre>
+                <br>
+                <pre><code>
+                    Status: 400
+                    {"message":"A book of title 'sdf' does not exist","id":"doesNotExist"}
+                </code></pre>
+            </div>
+
             <br>
         </div>
     </div>

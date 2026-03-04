@@ -23,7 +23,7 @@ const getDocumentation = (request, response) => {
         'Content-Type': 'text/html',
         'Content-Length': documentation.length,
     });
-    response.write(index);
+    response.write(documentation);
     response.end();
 }
 
