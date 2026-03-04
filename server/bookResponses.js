@@ -46,9 +46,6 @@ const handlePOST = (pathname, request, response) => {
 const getBooksGET = (request, response) => {
     const responseJSON = { books };
 
-    console.log("getBooksGET called");
-    console.log(JSON.stringify(responseJSON));
-
     response.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
     response.write(JSON.stringify(responseJSON));
     response.end();
@@ -327,6 +324,7 @@ const getYearHEAD = (request, response) => {
 
     const yearNum = parseInt(year, 10);
 
+    //had to change up search method for year to make sure it searched for an integer (year) not string
     const book = books.find(
         (b) => b.year === yearNum
     );
@@ -357,6 +355,7 @@ const notRealHEAD = (request, response) => {
 }
 
 //HEAD 404 version with no body
+//when no route exists at all
 const notFoundHEAD = (request, response) => {
     const responseJSON = {
         message: 'The page you are looking for was not found',
@@ -389,9 +388,11 @@ const addBookPOST = (request, response) => {
                 };
                 const data = JSON.stringify(responseJSON);
 
+                //added error message for eslint purposes
                 response.writeHead(400, {
                     'Content-Type': 'application/json',
                     'Content-Length': Buffer.byteLength(data),
+                    error: err.message,
                 });
                 response.write(data);
                 return response.end();
@@ -480,10 +481,13 @@ const editBookPOST = (request, response) => {
                 };
                 const data = JSON.stringify(responseJSON);
 
+                //added error message for eslint purposes
                 response.writeHead(400, {
                     'Content-Type': 'application/json',
                     'Content-Length': Buffer.byteLength(data),
+                    error: err.message
                 });
+                
                 response.write(data);
                 return response.end();
             }
@@ -528,7 +532,7 @@ const editBookPOST = (request, response) => {
         } else {
             const responseJSON = {
                 message: `A book of title '${title}' does not exist`,
-                id: 'doesNotExist',
+                id: 'doesNotExist'
             };
 
             response.writeHead(400, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(JSON.stringify(responseJSON)) });
@@ -562,9 +566,16 @@ module.exports = {
     handlePOST,
     getBooksGET,
     getBooksHEAD,
+    getYearGET,
+    getYearHEAD,
+    getAuthorGET,
+    getAuthorHEAD,
+    getTitleGET,
+    getTitleHEAD,
     notRealGET,
     notRealHEAD,
     addBookPOST,
+    editBookPOST,
     notFoundGET,
     notFoundHEAD,
     notFoundPOST

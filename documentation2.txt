@@ -18,3 +18,4 @@ If you used any borrowed code or code fragments, where did you get them from?
 
 What do the code fragments do? Where are they in your code?
 for server.js: used base from office hours convo and http api assignment 2
+for bookResponses.js to get started with i referenced responses.js from http api assignment 2

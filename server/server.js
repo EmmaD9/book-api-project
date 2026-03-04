@@ -16,8 +16,6 @@ const onRequest = (request, response) => {
         request.acceptedTypes = request.headers.accept.split(',');
     }
 
-    console.log(JSON.stringify(request.query));
-
     const { pathname } = parsedUrl;
 
     //static webpages
@@ -52,5 +50,5 @@ const onRequest = (request, response) => {
 };
 
 http.createServer(onRequest).listen(port, () => {
-    console.log(`Listening on 127.0.0.1: ${port}`);
+    //console.log(`Listening on 127.0.0.1: ${port}`);
 });

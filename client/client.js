@@ -15,7 +15,6 @@ async function getBooks() {
     const data = await response.json();
     let jsonString = JSON.stringify(data, null, 2);
     content.innerHTML += `<pre>${jsonString}</pre>`;
-    //console.log(data);
 }
 
 async function getAuthors() {
@@ -29,7 +28,6 @@ async function getAuthors() {
     const data = await response.json();
     let jsonString = JSON.stringify(data, null, 2);
     content.innerHTML += `<pre>${jsonString}</pre>`;
-    console.log(data);
 }
 
 async function getTitles() {
@@ -42,7 +40,6 @@ async function getTitles() {
     const data = await response.json();
     let jsonString = JSON.stringify(data, null, 2);
     content.innerHTML += `<pre>${jsonString}</pre>`;
-    //console.log(data);
 }
 
 async function getYears() {
@@ -55,7 +52,6 @@ async function getYears() {
     const data = await response.json();
     let jsonString = JSON.stringify(data, null, 2);
     content.innerHTML += `<pre>${jsonString}</pre>`;
-    //console.log(data);
 }
 
 //button linking
